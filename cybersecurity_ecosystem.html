@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sveriges cybersäkerhetsekosystem enligt NIS2</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #333;
+            min-height: 100vh;
+        .flow-section {
+            grid-column: 1 / -1;
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .flow-box {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid;
+        }
+
+        .registration-flow {
+            border-left-color: #28a745;
+        }
+
+        .incident-flow {
+            border-left-color: #dc3545;
+        }
+
+        .flow-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .flow-step {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid;
+            position: relative;
+        }
+
+        .flow-step.step-1 { border-left-color: #007bff; }
+        .flow-step.step-2 { border-left-color: #6f42c1; }
+        .flow-step.step-3 { border-left-color: #fd7e14; }
+        .flow-step.step-4 { border-left-color: #20c997; }
+        .flow-step.step-5 { border-left-color: #e83e8c; }
+
+        .step-header {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+
+        .step-content {
+            font-size: 0.9rem;
+            color: #6c757d;
+            line-height: 1.4;
+        }
+
+        .step-time {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .step-actor {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .flow-arrow {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #6c757d;
+            margin: 5px 0;
+        }
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .sectors-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .prescriptions-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .prescription-box {
+                padding: 12px;
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .ecosystem {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+            min-height: 600px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid;
+        }
+
+        .eu-section {
+            border-left-color: #FFD700;
+            background: linear-gradient(135deg, #FFF8DC, #FFFACD);
+        }
+
+        .central-section {
+            border-left-color: #FF6B6B;
+            background: linear-gradient(135deg, #FFE5E5, #FFF0F0);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .supervision-section {
+            border-left-color: #4ECDC4;
+            background: linear-gradient(135deg, #E0F7F7, #F0FFFE);
+        }
+
+        .section h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .msb-hub {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+            color: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+
+        .msb-hub h2 {
+            margin: 0 0 15px 0;
+            font-size: 1.8rem;
+        }
+
+        .role {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin: 5px 0;
+            font-weight: bold;
+        }
+
+        .authority {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 8px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .authority:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-color: #4ECDC4;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .authority-name {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 4px;
+        }
+
+        .authority-sectors {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .sectors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .sector {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .sector:hover {
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        .tooltip {
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: normal;
+            text-align: left;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            min-width: 280px;
+            max-width: 400px;
+            white-space: normal;
+            line-height: 1.4;
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: rgba(0, 0, 0, 0.95);
+        }
+
+        .sector:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            bottom: 130%;
+        }
+
+        .tooltip-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #FFD700;
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+        }
+
+        .tooltip-content {
+            font-size: 0.8rem;
+            line-height: 1.3;
+        }
+
+        .connection-line {
+            position: relative;
+            height: 3px;
+            background: linear-gradient(90deg, #4ECDC4, #44A08D);
+            border-radius: 3px;
+            margin: 20px 0;
+        }
+
+        .connection-line::before,
+        .connection-line::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+
+        .connection-line::after {
+            right: -8px;
+            top: -4px;
+            border-width: 5px 0 5px 8px;
+            border-color: transparent transparent transparent #44A08D;
+        }
+
+        .stats-box {
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            display: block;
+        }
+
+        .stats-label {
+            color: #666;
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        .eu-entities {
+            list-style: none;
+            padding: 0;
+        }
+
+        .eu-entities li {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin: 5px 0;
+            border-left: 3px solid #FFD700;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .eu-entities li:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateX(5px);
+        }
+
+        .eu-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        @media (max-width: 1200px) {
+            .ecosystem {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .sectors-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        .prescriptions-layer {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px dashed #6c757d;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .prescriptions-header {
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 20px;
+        }
+
+        .prescriptions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .prescription-box {
+            background: white;
+            border-left: 4px solid #fd7e14;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .prescription-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .prescription-issuer {
+            font-weight: bold;
+            color: #fd7e14;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .prescription-content {
+            font-size: 0.9rem;
+            color: #6c757d;
+            line-height: 1.4;
+        }
+
+        .prescription-target {
+            background: rgba(253, 126, 20, 0.1);
+            padding: 5px 8px;
+            border-radius: 5px;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: #fd7e14;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sveriges cybersäkerhetsekosystem</h1>
+        <p class="subtitle">Enligt NIS2-direktivet och kommande cybersäkerhetslag</p>
+
+        <div class="ecosystem">
+            <!-- EU-nivå -->
+            <div class="section eu-section">
+                <h3>🇪🇺 EU-nivå</h3>
+                <ul class="eu-entities">
+                    <li><a href="https://www.enisa.europa.eu/" target="_blank" class="eu-link"><strong>ENISA</strong><br>Cybersäkerhetsbyrå</a></li>
+                    <li><a href="https://digital-strategy.ec.europa.eu/en/policies/nis2-directive" target="_blank" class="eu-link"><strong>Samarbetsgruppen</strong><br>Strategiskt samarbete</a></li>
+                    <li><a href="https://www.enisa.europa.eu/topics/csirts-in-europe" target="_blank" class="eu-link"><strong>CSIRT-nätverket</strong><br>Operativt samarbete</a></li>
+                    <li><a href="https://www.enisa.europa.eu/topics/cyber-crisis-management" target="_blank" class="eu-link"><strong>EU-CyCLONe</strong><br>Cyberkrishantering</a></li>
+                    <li><a href="https://commission.europa.eu/strategy-and-policy/priorities-2019-2024/europe-fit-digital-age/european-digital-strategy_en" target="_blank" class="eu-link"><strong>Europeiska kommissionen</strong><br>Övervakning & riktlinjer</a></li>
+                </ul>
+                
+                <div class="stats-box">
+                    <span class="stats-number">27</span>
+                    <div class="stats-label">EU-medlemsstater</div>
+                </div>
+            </div>
+
+            <!-- Svenskt centrum -->
+            <div class="section central-section">
+                <div class="msb-hub">
+                    <h2><a href="https://www.msb.se/" target="_blank" style="color: white; text-decoration: none;">MSB - Navet</a></h2>
+                    <div class="role">🌐 Gemensam kontaktpunkt</div>
+                    <div class="role">🚨 CSIRT-enhet</div>
+                    <div class="role">⚡ Cyberkrishantering</div>
+                    <div class="role">🤝 Samordningsforum</div>
+                </div>
+
+                <div class="connection-line"></div>
+
+                <div class="stats-box">
+                    <span class="stats-number">18</span>
+                    <div class="stats-label">Sektorer som omfattas</div>
+                </div>
+
+                <div class="stats-box" style="margin-top: 10px;">
+                    <span class="stats-number">>185M</span>
+                    <div class="stats-label">SEK/år löpande kostnader</div>
+                </div>
+            </div>
+
+            <!-- Tillsynsmyndigheter -->
+            <div class="section supervision-section">
+                <h3>🏛️ Tillsynsmyndigheter</h3>
+                
+                <a href="https://www.energimyndigheten.se/" target="_blank" class="authority">
+                    <div class="authority-name">Statens energimyndighet</div>
+                    <div class="authority-sectors">Energi</div>
+                </a>
+
+                <a href="https://www.transportstyrelsen.se/" target="_blank" class="authority">
+                    <div class="authority-name">Transportstyrelsen</div>
+                    <div class="authority-sectors">Transport</div>
+                </a>
+
+                <a href="https://www.fi.se/" target="_blank" class="authority">
+                    <div class="authority-name">Finansinspektionen</div>
+                    <div class="authority-sectors">Bank & Finansmarknadsinfrastruktur</div>
+                </a>
+
+                <a href="https://www.ivo.se/" target="_blank" class="authority">
+                    <div class="authority-name">IVO</div>
+                    <div class="authority-sectors">Vårdgivare</div>
+                </a>
+
+                <a href="https://www.lakemedelsverket.se/" target="_blank" class="authority">
+                    <div class="authority-name">Läkemedelsverket</div>
+                    <div class="authority-sectors">Hälso- och sjukvård (exkl. vårdgivare)</div>
+                </a>
+
+                <a href="https://www.livsmedelsverket.se/" target="_blank" class="authority">
+                    <div class="authority-name">Livsmedelsverket</div>
+                    <div class="authority-sectors">Dricksvatten, Avloppsvatten, Livsmedel</div>
+                </a>
+
+                <a href="https://www.pts.se/" target="_blank" class="authority">
+                    <div class="authority-name">PTS</div>
+                    <div class="authority-sectors">Digital infrastruktur, Rymden</div>
+                </a>
+
+                <a href="https://www.lansstyrelsen.se/" target="_blank" class="authority">
+                    <div class="authority-name">Länsstyrelser (4 st)</div>
+                    <div class="authority-sectors">Offentlig förvaltning</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Sektorer som omfattas -->
+        <h3 style="text-align: center; margin-top: 40px; color: #1e3c72;">📋 Sektorer som omfattas av cybersäkerhetslagen</h3>
+        <div class="sectors-grid">
+            <div class="sector">
+                ⚡ Energi
+                <div class="tooltip">
+                    <div class="tooltip-title">Energisektorn</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Elproduktion, eldistribution, gastransport, raffinaderier, olje- och gaslager<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större (≥50 anställda eller viss omsättning)
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                🚛 Transporter
+                <div class="tooltip">
+                    <div class="tooltip-title">Transportsektorn</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Flyg, järnväg, sjöfart, vägtransport enligt NIS2-direktivets definitioner<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                🏦 Bankverksamhet
+                <div class="tooltip">
+                    <div class="tooltip-title">Bankverksamhet</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Kreditinstitut enligt EU-förordning 575/2013<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                📊 Finansmarknadsinfrastruktur
+                <div class="tooltip">
+                    <div class="tooltip-title">Finansmarknadsinfrastruktur</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Handelsplatser, centrala motparter enligt EU-lagstiftning<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                🏥 Hälso- och sjukvård
+                <div class="tooltip">
+                    <div class="tooltip-title">Hälso- och sjukvårdssektorn</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Vårdgivare, läkemedelsföretag, medicintekniska produkter<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                💧 Dricksvatten
+                <div class="tooltip">
+                    <div class="tooltip-title">Dricksvattensektor</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Vattenproduktion och distribution<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                🚰 Avloppsvatten
+                <div class="tooltip">
+                    <div class="tooltip-title">Avloppsvattensektor</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Avloppsrening och hantering<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                💻 Digital infrastruktur
+                <div class="tooltip">
+                    <div class="tooltip-title">Digital infrastruktur</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Internetknutpunkter, DNS-tjänster, toppdomäner, datacenter<br>
+                        <strong>Särskilt:</strong> DNS och toppdomäner omfattas oavsett storlek
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                🔧 IKT-tjänster (B2B)
+                <div class="tooltip">
+                    <div class="tooltip-title">Förvaltning av IKT-tjänster</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Leverantörer av utlokaliserade driftstjänster och säkerhetstjänster<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                🏛️ Offentlig förvaltning
+                <div class="tooltip">
+                    <div class="tooltip-title">Offentlig förvaltning</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Statliga myndigheter, kommuner, regioner<br>
+                        <strong>Undantag:</strong> Säkerhetskänslig verksamhet och brottsbekämpning
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                🚀 Rymden
+                <div class="tooltip">
+                    <div class="tooltip-title">Rymdsektorn</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Markbaserad infrastruktur för rymdbaserade tjänster<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                📮 Post- och budtjänster
+                <div class="tooltip">
+                    <div class="tooltip-title">Post- och budtjänster</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Posttjänster och kuriertjänster enligt NIS2-definitionen<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                ♻️ Avfallshantering
+                <div class="tooltip">
+                    <div class="tooltip-title">Avfallshantering</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Insamling, transport och behandling av avfall<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                ⚗️ Kemikalier
+                <div class="tooltip">
+                    <div class="tooltip-title">Kemikalier</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Tillverkning, produktion och distribution av kemikalier<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                🍎 Livsmedel
+                <div class="tooltip">
+                    <div class="tooltip-title">Livsmedel</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Produktion, bearbetning och distribution av livsmedel<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                🏭 Tillverkning
+                <div class="tooltip">
+                    <div class="tooltip-title">Tillverkning</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Medicintekniska produkter, elektronik, fordon, maskiner<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                🌐 Digitala leverantörer
+                <div class="tooltip">
+                    <div class="tooltip-title">Digitala leverantörer</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Sökmotorer, molntjänster, sociala nätverk, app-butiker<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större
+                    </div>
+                </div>
+            </div>
+            <div class="sector">
+                🔬 Forskning
+                <div class="tooltip">
+                    <div class="tooltip-title">Forskning</div>
+                    <div class="tooltip-content">
+                        <strong>Omfattar:</strong> Lärosäten med examenstillstånd<br>
+                        <strong>Storlekskrav:</strong> Medelstora företag eller större
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Föreskriftslager -->
+        <div class="prescriptions-layer">
+            <div class="prescriptions-header">📋 Föreskrifter - Detaljregleringen</div>
+            <div class="prescriptions-grid">
+                <div class="prescription-box">
+                    <div class="prescription-issuer">Regeringen</div>
+                    <div class="prescription-content">
+                        • Grundläggande policy och principer<br>
+                        • Vilka myndigheter som är tillsynsmyndigheter<br>
+                        • Undantag för partner- och anknutna företag
+                    </div>
+                    <div class="prescription-target">För: Hela systemet</div>
+                </div>
+
+                <div class="prescription-box">
+                    <div class="prescription-issuer">MSB (förmodligen)</div>
+                    <div class="prescription-content">
+                        • Definition av "betydande incident"<br>
+                        • Incidentrapportering - format och tidsfrister<br>
+                        • Samordning mellan tillsynsmyndigheter<br>
+                        • Register över verksamhetsutövare
+                    </div>
+                    <div class="prescription-target">För: Alla verksamhetsutövare</div>
+                </div>
+
+                <div class="prescription-box">
+                    <div class="prescription-issuer">Tillsynsmyndigheter</div>
+                    <div class="prescription-content">
+                        • Sektorsspecifika säkerhetsåtgärder<br>
+                        • Utbildningens innehåll för ledningen<br>
+                        • Säkerhetsrevisioner och skanningar<br>
+                        • Informationsskyldighet till kunder
+                    </div>
+                    <div class="prescription-target">För: Verksamhetsutövare inom respektive sektor</div>
+                </div>
+
+                <div class="prescription-box">
+                    <div class="prescription-issuer">PTS (särskilt)</div>
+                    <div class="prescription-content">
+                        • Avgifter för tillsyn inom digital infrastruktur<br>
+                        • DNS-tjänster och toppdomäner<br>
+                        • Elektroniska kommunikationstjänster
+                    </div>
+                    <div class="prescription-target">För: Digital infrastruktur-sektorn</div>
+                </div>
+
+                <div class="prescription-box">
+                    <div class="prescription-issuer">Länsstyrelser</div>
+                    <div class="prescription-content">
+                        • Offentlig förvaltnings särskilda behov<br>
+                        • Samordning mellan kommuner och regioner<br>
+                        • Anpassning till kommunal självstyrelse
+                    </div>
+                    <div class="prescription-target">För: Kommuner, regioner, statliga myndigheter</div>
+                </div>
+
+                <div class="prescription-box">
+                    <div class="prescription-issuer">Sektorsmyndigheter</div>
+                    <div class="prescription-content">
+                        • Branschspecifika tekniska standarder<br>
+                        • Riskhanteringsåtgärder för sektorn<br>
+                        • Vägledning för verksamhetsutövare
+                    </div>
+                    <div class="prescription-target">För: Respektive sektors aktörer</div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+        <!-- Processflöden -->
+        <div class="flow-section">
+            <!-- Anmälningsprocess -->
+            <div class="flow-box registration-flow">
+                <div class="flow-title">
+                    📋 Anmälningsprocess
+                </div>
+
+                <div class="flow-step step-1">
+                    <div class="step-header">1. Verksamhetsutövaren identifierar sig</div>
+                    <div class="step-content">
+                        Kontrollerar om verksamheten omfattas av cybersäkerhetslagen (sektor + storlek)
+                    </div>
+                    <div class="step-actor">Verksamhetsutövare</div>
+                </div>
+
+                <div class="flow-arrow">⬇️</div>
+
+                <div class="flow-step step-2">
+                    <div class="step-header">2. Central anmälan</div>
+                    <div class="step-content">
+                        Lämnar uppgifter om identitet, kontaktinfo, verksamhet, nätverks- och informationssystem till central myndighet (troligen MSB)
+                    </div>
+                    <div class="step-actor">Verksamhetsutövare → Central myndighet (MSB?)</div>
+                </div>
+
+                <div class="flow-arrow">⬇️</div>
+
+                <div class="flow-step step-3">
+                    <div class="step-header">3. Fördelning till tillsynsmyndighet</div>
+                    <div class="step-content">
+                        Central myndighet fördelar anmälan till rätt tillsynsmyndighet baserat på sektor och klassificerar verksamhetsutövaren
+                    </div>
+                    <div class="step-actor">Central myndighet → Tillsynsmyndighet</div>
+                </div>
+
+                <div class="flow-arrow">⬇️</div>
+
+                <div class="flow-step step-4">
+                    <div class="step-header">4. Registrering</div>
+                    <div class="step-content">
+                        Registrering i nationellt register - tillsynsmyndighet rapporterar tillbaka till central myndighet
+                    </div>
+                    <div class="step-actor">Tillsynsmyndighet → Central myndighet</div>
+                </div>
+
+                <div class="flow-arrow">⬇️</div>
+
+                <div class="flow-step step-5">
+                    <div class="step-header">5. EU-rapportering</div>
+                    <div class="step-content">
+                        Central myndighet (som gemensam kontaktpunkt) rapporterar svenska verksamhetsutövare till EU-kommissionen
+                    </div>
+                    <div class="step-actor">Central myndighet → EU-kommissionen</div>
+                </div>
+            </div>
+
+            <!-- Incidentrapportering -->
+            <div class="flow-box incident-flow">
+                <div class="flow-title">
+                    🚨 Incidentrapportering
+                </div>
+
+                <div class="flow-step step-1">
+                    <div class="step-header">1. Incident upptäcks</div>
+                    <div class="step-content">
+                        Verksamhetsutövare identifierar en betydande cybersäkerhetsincident
+                    </div>
+                    <div class="step-actor">Verksamhetsutövare</div>
+                </div>
+
+                <div class="flow-arrow">⬇️</div>
+
+                <div class="flow-step step-2">
+                    <div class="step-header">2. Varning</div>
+                    <div class="step-content">
+                        Första snabba underrättelse med grundläggande information om incidenten
+                    </div>
+                    <div class="step-time">Inom 24 timmar</div>
+                    <div class="step-actor">Verksamhetsutövare → MSB (CSIRT)</div>
+                </div>
+
+                <div class="flow-arrow">⬇️</div>
+
+                <div class="flow-step step-3">
+                    <div class="step-header">3. Incidentanmälan</div>
+                    <div class="step-content">
+                        Detaljerad rapport med analys, påverkan, åtgärder och uppdatering av varningen
+                    </div>
+                    <div class="step-time">Inom 72 timmar</div>
+                    <div class="step-actor">Verksamhetsutövare → MSB (CSIRT)</div>
+                </div>
+
+                <div class="flow-arrow">⬇️</div>
+
+                <div class="flow-step step-4">
+                    <div class="step-header">4. Slutrapport</div>
+                    <div class="step-content">
+                        Slutgiltig rapport med detaljerad analys, lärdomar och förebyggande åtgärder
+                    </div>
+                    <div class="step-time">Inom 1 månad</div>
+                    <div class="step-actor">Verksamhetsutövare → MSB (CSIRT)</div>
+                </div>
+
+                <div class="flow-arrow">⬇️</div>
+
+                <div class="flow-step step-5">
+                    <div class="step-header">5. Vidarebefordran & Analys</div>
+                    <div class="step-content">
+                        MSB analyserar, delar information med tillsynsmyndigheter och rapporterar till EU vid gränsöverskridande påverkan
+                    </div>
+                    <div class="step-actor">MSB → Tillsynsmyndighet/EU</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #666; font-style: italic;">
+            Träder i kraft 15 januari 2026
+        </div>
+    </div>
+</body>
+</html>
